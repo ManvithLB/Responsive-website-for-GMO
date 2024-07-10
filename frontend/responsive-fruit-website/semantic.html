@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!--=============== FAVICON ===============-->
+    <link
+      rel="shortcut icon"
+      href="assets/img/favicon.png"
+      type="image/x-icon"
+    />
+
+    <!--=============== REMIXICONS ===============-->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css"
+      crossorigin=""
+    />
+
+    <!--=============== CSS ===============-->
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <title>GMO and GEAC Chatbot</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Poppins:wght@400;500;600&display=swap");
+      .main {
+        margin-top: 100px; /* Add margin to the top of the main content */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+      .card {
+        width: 100%;
+        max-width: 600px;
+        background-color: rgb(136, 130, 130);
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin: 20px 0;
+        text-align: center;
+      }
+      .card h2 {
+        margin-bottom: 10px;
+        font: "Poppins";
+      }
+      .card p {
+        font-size: 16px;
+        color: var(--title-color);
+      }
+      .container-chatbot {
+        width: 100%;
+        max-width: 600px;
+        background-color: rgb(146, 141, 141);
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+      }
+      form input,
+      form button {
+        border-radius: 10px;
+        margin-bottom: 10px;
+        padding: 10px;
+        font-size: 16px;
+      }
+      form button {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      form button:hover {
+        background-color: #45a049;
+      }
+      .response {
+        margin-top: 20px;
+        padding: 10px;
+        background-color: #e9e9e9;
+        border-radius: 4px;
+      }
+      .chatbot-heading {
+        padding-bottom: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <!--==================== HEADER ====================-->
+    <header class="header" id="header">
+      <nav class="nav container">
+        <a href="#" class="nav__logo">
+          <img src="assets/img/gmo-food-2.png" />Fruit
+        </a>
+
+        <div class="nav__menu" id="nav-menu">
+          <ul class="nav__list">
+            <li class="nav__item">
+              <a href="index.html#home" class="nav__link active-link">Home</a>
+            </li>
+
+            <li class="nav__item">
+              <a href="#about" class="nav__link">About Us</a>
+            </li>
+
+            <li class="nav__item">
+              <a href="#popular" class="nav__link">Popular</a>
+            </li>
+
+            <li class="nav__item">
+              <a href="#join" class="nav__link">Join Us</a>
+            </li>
+          </ul>
+
+          <div class="nav__close" id="nav-close">
+            <i class="ri-close-line"></i>
+          </div>
+
+          <img src="assets/img/branch-2.png" alt="" class="nav__img-1" />
+          <img src="assets/img/fruit-line-1.png" alt="" class="nav__img-2" />
+        </div>
+
+        <div class="nav__buttons">
+          <i class="ri-moon-line change-theme" id="theme-button"></i>
+
+          <div class="nav__toggle" id="nav-toggle">
+            <i class="ri-apps-2-line"></i>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="main">
+      <div class="card">
+        <h2>Welcome to GMO and GEAC Chatbot</h2>
+        <p class="ptext">
+          Get accurate and detailed information about GMOs and GEAC.
+        </p>
+      </div>
+
+      <div class="container">
+        <h1>Sentiment Analysis</h1>
+        <form id="sentiment-form">
+          <input
+            type="text"
+            id="text"
+            placeholder="Enter text to analyze sentiment..."
+            required
+          />
+          <button type="submit">Analyze</button>
+        </form>
+        <div class="response" id="sentiment-response"></div>
+      </div>
+    </main>
+
+    <!--========== SCROLL UP ==========-->
+    <a href="#" class="scrollup" id="scroll-up">
+      <i class="ri-arrow-up-s-line"></i>
+    </a>
+
+    <script>
+      document
+        .getElementById("sentiment-form")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault();
+
+          const text = document.getElementById("text").value;
+          const sentimentResponseDiv =
+            document.getElementById("sentiment-response");
+
+          sentimentResponseDiv.textContent = "Processing...";
+
+          const sentimentResponse = await fetch(
+            "https://manvithlb.pythonanywhere.com/api/analyze",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ text }),
+            }
+          );
+
+          const sentimentData = await sentimentResponse.json();
+
+          if (sentimentResponse.ok) {
+            sentimentResponseDiv.innerHTML = `
+                    <p>Polarity: ${sentimentData.polarity}</p>
+                    <p>Positive: ${sentimentData.positive}</p>
+                    <p>Negative: ${sentimentData.negative}</p>
+                    <p>Neutral: ${sentimentData.neutral}</p>
+                `;
+          } else {
+            sentimentResponseDiv.textContent = sentimentData.error;
+          }
+        });
+    </script>
+
+    <!--=============== SCROLLREVEAL ===============-->
+    <script src="assets/js/scrollreveal.min.js"></script>
+
+    <!--=============== MAIN JS ===============-->
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>

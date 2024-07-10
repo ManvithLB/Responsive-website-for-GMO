@@ -1,0 +1,38 @@
+
+.geac{
+    text-align: center;
+  }
+  
+  .geac1{
+    padding-top: 10rem;
+    text-align: center;
+    font-size: var(--big-font-size);
+    padding-bottom: 3rem;
+  }
+  
+  .geac2{
+    /* padding-top: 3rem; */
+    font-size: var(--h2-font-size);
+    font-family: var(--first-font);
+  }
+  
+  .geac3{
+    /* padding-top: 1rem; */
+    font-size: var(--h1-font-size);
+    color: burlywood;
+  }
+
+  .button__geac{
+    margin: auto;
+  background-color: var(--first-color);
+  padding: 1rem 2rem;
+  border-radius: 4rem;
+  color: var(--white-color);
+  font-weight: var(--font-semi-bold);
+  transition: box-shadow .4s;
+  }
+
+  .ge{
+    display: flex;
+    justify-content: center;
+  }

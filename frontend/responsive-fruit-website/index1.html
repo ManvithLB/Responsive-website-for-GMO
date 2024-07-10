@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!--=============== FAVICON ===============-->
+    <link
+      rel="shortcut icon"
+      href="assets/img/favicon.png"
+      type="image/x-icon"
+    />
+
+    <!--=============== REMIXICONS ===============-->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css"
+      crossorigin=""
+    />
+
+    <!--=============== CSS ===============-->
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <link rel="stylesheet" href="assets/css/bot.css" />
+    <title>GMO and GEAC Chatbot</title>
+  </head>
+  <body>
+    <!--==================== HEADER ====================-->
+    <header class="header" id="header">
+      <nav class="nav container">
+        <a href="#" class="nav__logo">
+          <img src="assets/img/gmo-food-2.png" />Fruit
+        </a>
+
+        <div class="nav__menu" id="nav-menu">
+          <ul class="nav__list">
+            <li class="nav__item">
+              <a href="index.html#home" class="nav__link active-link">Home</a>
+            </li>
+
+            <li class="nav__item">
+              <a href="#about" class="nav__link">About Us</a>
+            </li>
+
+            <li class="nav__item">
+              <a href="#popular" class="nav__link">Popular</a>
+            </li>
+
+            <li class="nav__item">
+              <a href="#join" class="nav__link">Join Us</a>
+            </li>
+          </ul>
+
+          <div class="nav__close" id="nav-close">
+            <i class="ri-close-line"></i>
+          </div>
+
+          <img src="assets/img/branch-2.png" alt="" class="nav__img-1" />
+          <img src="assets/img/fruit-line-1.png" alt="" class="nav__img-2" />
+        </div>
+
+        <div class="nav__buttons">
+          <i class="ri-moon-line change-theme" id="theme-button"></i>
+
+          <div class="nav__toggle" id="nav-toggle">
+            <i class="ri-apps-2-line"></i>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="main">
+      <div class="card">
+        <h2>Welcome to GMO and GEAC Chatbot</h2>
+        <p class="ptext">
+          Get accurate and detailed information about GMOs and GEAC.
+        </p>
+      </div>
+
+      <div class="container-chatbot">
+        <div>
+          <img src="./assets/img/chemistry.png" alt="" class="chatbot-img" />
+        </div>
+        <div>
+          <div class="chatbot-heading">
+            <h1>GMO and GEAC Chatbot</h1>
+          </div>
+
+          <form id="chat-form">
+            <input
+              type="text"
+              id="question"
+              placeholder="Ask a question about GMOs or GEAC..."
+              required
+            />
+            <button type="submit">Submit</button>
+          </form>
+          <div class="response" id="chat-response"></div>
+        </div>
+      </div>
+    </main>
+
+    <!--========== SCROLL UP ==========-->
+    <a href="#" class="scrollup" id="scroll-up">
+      <i class="ri-arrow-up-s-line"></i>
+    </a>
+
+    <script>
+      document
+        .getElementById("chat-form")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault();
+
+          const question = document.getElementById("question").value;
+          const chatResponseDiv = document.getElementById("chat-response");
+
+          chatResponseDiv.textContent = "Processing...";
+
+          const chatResponse = await fetch(
+            "https://manvithlb.pythonanywhere.com/api/chat",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ question }),
+            }
+          );
+
+          const chatData = await chatResponse.json();
+
+          if (chatResponse.ok) {
+            chatResponseDiv.textContent = chatData.response;
+          } else {
+            chatResponseDiv.textContent = chatData.error;
+          }
+        });
+    </script>
+
+    <!--=============== SCROLLREVEAL ===============-->
+    <script src="assets/js/scrollreveal.min.js"></script>
+
+    <!--=============== MAIN JS ===============-->
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>

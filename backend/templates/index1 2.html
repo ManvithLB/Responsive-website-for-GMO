@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>GMO and GEAC Chatbot</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        background-color: #f4f4f4;
+      }
+      .container {
+        width: 100%;
+        max-width: 600px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+      }
+      form input,
+      form button {
+        margin-bottom: 10px;
+        padding: 10px;
+        font-size: 16px;
+      }
+      form button {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      form button:hover {
+        background-color: #45a049;
+      }
+      .response {
+        margin-top: 20px;
+        padding: 10px;
+        background-color: #e9e9e9;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <!--==================== HEADER ====================-->
+    <header class="header" id="header">
+      <nav class="nav container">
+        <a href="#" class="nav__logo">
+          <img src="assets/img/logo.png" />Fruit
+        </a>
+
+        <div class="nav__menu" id="nav-menu">
+          <ul class="nav__list">
+            <li class="nav__item">
+              <a href="#home" class="nav__link active-link">Home</a>
+            </li>
+
+            <li class="nav__item">
+              <a href="#about" class="nav__link">About Us</a>
+            </li>
+
+            <li class="nav__item">
+              <a href="#popular" class="nav__link">Popular</a>
+            </li>
+
+            <li class="nav__item">
+              <a href="#join" class="nav__link">Join Us</a>
+            </li>
+          </ul>
+
+          <div class="nav__close" id="nav-close">
+            <i class="ri-close-line"></i>
+          </div>
+
+          <img src="assets/img/branch-2.png" alt="" class="nav__img-1" />
+          <img src="assets/img/fruit-line-1.png" alt="" class="nav__img-2" />
+        </div>
+
+        <div class="nav__buttons">
+          <i class="ri-moon-line change-theme" id="theme-button"></i>
+
+          <div class="nav__toggle" id="nav-toggle">
+            <i class="ri-apps-2-line"></i>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <div class="container">
+      <h1>GMO and GEAC Chatbot</h1>
+      <form id="chat-form">
+        <input
+          type="text"
+          id="question"
+          placeholder="Ask a question about GMOs or GEAC..."
+          required
+        />
+        <button type="submit">Submit</button>
+      </form>
+      <div class="response" id="chat-response"></div>
+    </div>
+
+    <div class="container">
+      <h1>Sentiment Analysis</h1>
+      <form id="sentiment-form">
+        <input
+          type="text"
+          id="text"
+          placeholder="Enter text to analyze sentiment..."
+          required
+        />
+        <button type="submit">Analyze</button>
+      </form>
+      <div class="response" id="sentiment-response"></div>
+    </div>
+
+    <script>
+      document
+        .getElementById("chat-form")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault();
+
+          const question = document.getElementById("question").value;
+          const chatResponseDiv = document.getElementById("chat-response");
+
+          chatResponseDiv.textContent = "Processing...";
+
+          const chatResponse = await fetch(
+            "https://manvithlb.pythonanywhere.com/api/chat",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ question }),
+            }
+          );
+
+          const chatData = await chatResponse.json();
+
+          if (chatResponse.ok) {
+            chatResponseDiv.textContent = chatData.response;
+          } else {
+            chatResponseDiv.textContent = chatData.error;
+          }
+        });
+
+      document
+        .getElementById("sentiment-form")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault();
+
+          const text = document.getElementById("text").value;
+          const sentimentResponseDiv =
+            document.getElementById("sentiment-response");
+
+          sentimentResponseDiv.textContent = "Processing...";
+
+          const sentimentResponse = await fetch(
+            "https://manvithlb.pythonanywhere.com/api/analyze",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ text }),
+            }
+          );
+
+          const sentimentData = await sentimentResponse.json();
+
+          if (sentimentResponse.ok) {
+            sentimentResponseDiv.innerHTML = `
+                    <p>Polarity: ${sentimentData.polarity}</p>
+                    <p>Positive: ${sentimentData.positive}</p>
+                    <p>Negative: ${sentimentData.negative}</p>
+                    <p>Neutral: ${sentimentData.neutral}</p>
+                `;
+          } else {
+            sentimentResponseDiv.textContent = sentimentData.error;
+          }
+        });
+    </script>
+  </body>
+</html>
