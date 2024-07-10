@@ -1,1 +1,0 @@
-# Responsive-website-for-GMO
