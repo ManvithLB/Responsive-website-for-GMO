@@ -109,7 +109,7 @@
             <img src="assets/img/gmo-food-2.png" alt="" /> GMO
           </a>
 
-          <p class="footer__description">kjdbcs c</p>
+         
         </div>
 
         <div class="footer__data grid">
@@ -195,7 +195,7 @@
         />
       </div>
 
-      <span class="footer__copy"> &#169; All Rights reserved by Manvith </span>
+      <span class="footer__copy"> &#169; All Rights reserved by Manvith and Jerin </span>
     </footer>
 
     <!--========== SCROLL UP ==========-->
@@ -216,7 +216,7 @@
           sentimentResponseDiv.textContent = "Processing...";
 
           const sentimentResponse = await fetch(
-            "https://manvithlb.pythonanywhere.com/api/analyze",
+            "https://localhost:5000/api/analyze",
             {
               method: "POST",
               headers: {
