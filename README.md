@@ -24,22 +24,33 @@ Enjoy a visually appealing and user-friendly experience across devices.
 ![Screenshot 2024-07-11 111207](https://github.com/ManvithLB/Responsive-website-for-GMO/assets/140680949/09d75a25-9734-4fbd-a486-c01415e8afe1)
 
 
+
 # Technologies Used
 
 1. **Frontend:**   HTML, CSS, JavaScript
 2. **Backend:**   Flask
-3. **Chatbot Model:**   Expert on GMOs and GEAC
-4. **Sentiment Analysis Model:**   Segregates user comments into positive, negative, or neutral sentiments
+3. **Chatbot Model:**   Gemini API ( google.generativeai )
+4. **Sentiment Analysis Model:**   vaderSentiment (python module)
 
 # Installation
 
 To run this project locally, follow these steps:
 ### 1. Clone the repository:
-- git clone https://github.com/ManvithLB/Responsive-website-for-GMO.git <br />
+``` git clone https://github.com/ManvithLB/Responsive-website-for-GMO```
 ### 2. Navigate to the project directory:
-- cd Responsive-website-for-GMO <br />
+- cd Responsive-website-for-GMO
+- cd frontend
+- cd Responsive-gmo <br />
 ### 3. Open the index.html file
 
-# Contributing
+## For backend
+### 1. Navigate to the project directory:
+- cd Responsive-website-for-GMO
+- cd backend <br />
+### 2.Install all the dependencies
+``` pip install -r requirementsnew.txt ```
+### 3.Start the flask server
+``` python3 appy.py ```
+
 
 
